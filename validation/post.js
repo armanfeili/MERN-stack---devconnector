@@ -5,19 +5,10 @@ module.exports = function validateRegisterInput (data) { // it's just a function
   let errors = {}; // we create an empty errors object, so if there was an error, it gets fill
 
   // the required things
-  data.email = !isEmpty(data.email) ? data.email : ''; // the isEmpty() method used here is the method we own created
-  data.password = !isEmpty(data.password) ? data.password : '';
-
-  if (!validator.isEmail(data.email)) {
-    errors.email = 'Email is invalid!';
-  }
-
-  if (validator.isEmpty(data.email)) {
-    errors.email = 'Email feild is required!';
-  }
-
-  if (validator.isEmpty(data.password)) {
-    errors.password = 'Password feild is required!';
+  data.text = !isEmpty(data.text) ? data.text : ''; // the isEmpty() method used here is the method we own created
+  // here only text is required and stuff like name,avatar,date will come programmatically
+  if (!validator.isEmail(data.text)) {
+    errors.text = 'Text feild is required!';
   }
 
   return {

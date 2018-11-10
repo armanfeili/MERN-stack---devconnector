@@ -9,6 +9,8 @@ const User = require('../../models/User');
 
 // Load validation
 const validateProfileInput = require('./../../validation/profile');
+const validateExperienceInput = require('./../../validation/experience');
+const validateEducationInput = require('./../../validation/education');
 
 // @route   GET api/profile/all  ->
 // @desc    get all profiles
@@ -149,4 +151,121 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
   });
 });
 
+// @route   POST api/profile/experience
+// @desc    add experience to profile
+// @access  Private
+router.post('/experience', passport.authenticate('jwt', {session: false}), (req, res) => {
+  const { errors, isValid } = validateExperienceInput(req.body);
+
+  // check validation
+  if (!isValid) {
+    return res.status(400).json(errors); // return any errors
+  }
+
+  Profile.findOne({user: req.user.id})
+    .then(profile => {
+      const newExp = {
+        title: req.body.title,
+        company: req.body.company,
+        location: req.body.location,
+        from: req.body.from,
+        to: req.body.to,
+        current: req.body.current,
+        description: req.body.description
+      };
+
+      // Add to Exp array
+      profile.experience.unshift(newExp); // we used unshift() instead of push() to add element at the begining of array
+
+      // save the profile into DB
+      profile.save().then(res.json(profile));
+    });
+});
+
+// @route   POST api/profile/education
+// @desc    add education to profile
+// @access  Private
+router.post('/education', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const { errors, isValid } = validateEducationInput(req.body);
+
+  // check validation
+  if (!isValid) {
+    return res.status(400).json(errors); // return any errors
+  }
+
+  Profile.findOne({ user: req.user.id })
+    .then(profile => {
+      const newEdu = {
+        school: req.body.school,
+        degree: req.body.degree,
+        fieldOfStudy: req.body.fieldOfStudy,
+        from: req.body.from,
+        to: req.body.to,
+        current: req.body.current,
+        description: req.body.description
+      };
+
+      // Add to Exp array
+      profile.education.unshift(newEdu); // we used unshift() instead of push() to add element at the begining of array
+
+      // save the profile into DB
+      profile.save().then(res.json(profile));
+    });
+});
+
+// @route   Delete api/profile/experience/:exp_id
+// @desc    delete experience from profile
+// @access  Private
+router.delete('/experience/:exp_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+  Profile.findOne({ user: req.user.id })
+    .then(profile => {
+      // GET remove index -> find that experience
+      const removeIndex = profile.experience
+        .map(item => item.id)
+        .indexOf(req.params.exp_id);
+
+      // splice the item form array <-> splice out of array
+      profile.experience.splice(removeIndex, 1);
+
+      // save to DB
+      profile.save().then(profile => res.json(profile));
+    }).catch(err => res.status(404).json(err));
+});
+
+// @route   Delete api/profile/education/:exp_id
+// @desc    delete education from profile
+// @access  Private
+router.delete('/education/:edu_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+  Profile.findOne({ user: req.user.id })
+    .then(profile => {
+      // GET remove index -> find that education
+      const removeIndex = profile.education
+        .map(item => item.id)
+        .indexOf(req.params.edu_id);
+
+      // splice the item form array <-> splice out of array
+      profile.education.splice(removeIndex, 1);
+
+      // save to DB
+      profile.save().then(profile => res.json(profile));
+    }).catch(err => res.status(404).json(err));
+});
+
+// @route   Delete api/profile
+// @desc    delete user and profile
+// @access  Private
+router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+  if (req.user.id) {
+    Profile.findOneAndRemove({user: req.user.id}) // this will delete profile
+      .then(() => {
+        User.findOneAndRemove({_id: req.user.id}) // this will delete user
+          .then(() => res.json({success: true})); // with posting this DELETE request, we will delete both profile and user at the same time.
+      // if we want to, we can specify diffrent button with diffrent event to delete them separately
+      });
+  }else {
+    res.status(404).json({ message: 'user not found' });
+  }
+});
 module.exports = router;
