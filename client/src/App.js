@@ -8,14 +8,52 @@ import { Provider } from 'react-redux';
 import store from './store';
 // store is created in seprate file
 
+// **** this part is for setting token to all private route if user loged in *****/
+import jwt_decode from 'jwt-decode';
+import setAuthToken from './utils/setAuthToken';
+import { setCurrentUser, logoutUser } from './actions/authActions';
+import { clearCurrentProfile } from './actions/profileActions';
+// *******************************************************************************/
+
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Footer from './components/layout/Footer';
 
 import Register from './components/auth/register';
 import Login from './components/auth/login';
+import Dashboard from './components/dashboard/Dashboard';
 
 import './App.css'; // This is actually where we're going to put our own custom global CSS.
+
+// here we want to add token to localStorage , get the user info and expiration time and turn isAuthenticated to true
+// so if we reload the page, we still have token,userInfo and isAuthenticated
+
+// Check for token - if we go to browser>inspect>Application>Local Storage , we can see our token 
+if (localStorage.jwtToken) {
+  // Set auth token header auth
+  setAuthToken(localStorage.jwtToken);
+  // Decode token and get user info and expirationTime
+  const decoded = jwt_decode(localStorage.jwtToken);
+  // Set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+  // setCurrentUser is actually an action, which because of we exported it,
+  // we can call it to dispatch decoded token to reducer and finally update the state.
+  // we used store to dispatch an action to reducers
+
+  // Check for expired token
+  const currentTime = Date.now() / 1000; // now it is 'second' base
+  if (decoded.exp < currentTime) {
+    // we sat exp to 3600s , so it checks current time and if it was grater
+    // than (the time user logedin + 3600s), it will logout the user
+
+    // Logout user 
+    store.dispatch(logoutUser());
+    // Clear current profile
+    store.dispatch(clearCurrentProfile());
+    // Redirect to login
+    window.location.href = '/login';
+  }
+}
 
 class App extends Component {
   render () {
@@ -30,7 +68,8 @@ class App extends Component {
             {/* exact keyword helps to show component at exacly this specific route */}
             <div className='container'>
               <Route exact path='/register' component={Register} />
-              <Route exact path='/Login' component={Login} />
+              <Route exact path='/login' component={Login} />
+              <Route exact path='/dashboard' component={Dashboard} />
             </div>
             <Footer/>
           </div>
