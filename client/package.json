@@ -24,10 +24,12 @@
   },
   "proxy": "http://localhost:5000",
   "browserslist": [
-    ">0.25%",
-    "last 1 version",
-    "not ie 11",
-    "not ie_mob 11",
-    "not dead"
+    "> 0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not ie <= 10",
+    "not ie_mob <= 10",
+    "not bb <= 10",
+    "not op_mob <= 12.1"
   ]
 }
