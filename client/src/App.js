@@ -21,7 +21,6 @@ import Footer from './components/layout/Footer';
 
 import Register from './components/auth/register';
 import Login from './components/auth/login';
-import reddead from './components/auth/reddead';
 import Dashboard from './components/dashboard/Dashboard';
 
 // we import PrivateRoute component , so we use this for private routes instead of <Route />
@@ -86,7 +85,6 @@ class App extends Component {
             <div className='container'>
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
-              <Route exact path='/reddead' component={reddead} />
               <Route exact path='/profiles' component={Profiles} />
               <Route exact path='/profile/:handle' component={Profile} />
               <Switch>

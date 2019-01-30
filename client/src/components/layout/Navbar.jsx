@@ -32,9 +32,7 @@ class Navbar extends Component {
     // render is a lifecycle method that should return some JSX - before return we can use other logics and asign variables and like that
     const { isAuthenticated, user } = this.props.auth;
 
-    const authLinks = (
-      // in authLinks we wnat to have logOut button and a link to dashboard,
-      // logOut is not a <Link> and becasue of it's just a click event, we can use <a>, it's not actually going anywhere
+    const authLinks = ( // logOut is not a <Link> and becasue of it's just a click event, we can use <a>, it's not actually going anywhere // in authLinks we wnat to have logOut button and a link to dashboard,
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
           <Link className="nav-link" to="/feed">
@@ -54,11 +52,12 @@ class Navbar extends Component {
           >
             <img
               className="rounded-circle"
-              src={user.avatar}
+              src={`${user.avator}`}
               alt={user.name}
               style={{ width: "25px", marginRight: "5px" }}
               title="You must have a Gravatar connected to your email to display an image"
-            />{" "}
+            />
+            {console.log(user.avator)}
             Logout
           </Link>
         </li>
