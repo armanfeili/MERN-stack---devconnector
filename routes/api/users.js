@@ -55,6 +55,7 @@ router.post('/register', (req, res) => {
         avatar, // avatar will get the avatar of above
         password: req.body.password
       });
+      // generate a salt with 10 character
       bcrypt.genSalt(10, (err, salt) => {
         // hash the pass, we should create a salt first,here with 10 length
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -62,7 +63,7 @@ router.post('/register', (req, res) => {
           if (err) throw err; // if error, log it
           newUser.password = hash; // put the hashed password into plain-text password
           newUser
-            .save() // save it to db, and send the user as json respone
+            .save() // save the newUser to db, and send the user as json respone
             .then(user => res.json(user))
             .catch(err => console.log(err));
         });
@@ -101,12 +102,17 @@ router.post('/login', (req, res) => {
         // here because passwords are matched, so we can generate token
         // user matched
 
+        // jwt.sign() is for creating token, so this token act as a key for accessing website for certain time
         // jwt.sign(), takes some info named "payload" that it's what we want to include in token,
         // Now what we want to include is some user information so we can see what user it is
         // we also need to send secret (or key), and 'expiresIn' property to set an expiration time of being loged in.
-        // expiresIn is based on seconds and we set 3600s that implied as 1 hour.
+        // expiresIn is based on seconds and we set 3600s that implies as 1 hour.
 
         const payload = { id: user.id, name: user.name, avator: user.avatar }; // create JWT payload
+
+        // anytime we create a user or an object with a model (like here) ,
+        // it automatically creates an objectID as _id for this particular object.
+        // so we can (need to) add this id to our payload anytime we wanted to access a user and jwt it.
 
         // Sign token
         jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600}, (err, token) => { // jwt.sign(payload,privateKey,expirationTime,callback)
@@ -134,12 +140,13 @@ router.post('/login', (req, res) => {
 // Sessions(optional)
 router.get('/current', passport.authenticate('jwt', {session: false}), (req, res) => {
   // passport .autenticate() is a function that accept strategy and in some cases we should disable the session
-  // when we send GET request with header of token, these lines of code run, and passport.authenticate() get called. 
+  // when we send GET request with header of token, these lines of code run, and passport.authenticate() gets call. 
   // because we called users.js as route in server.js , and also we have passport.initialize() and passport config in server.js
   // so passport.js file will run and catch the passport with token and token has payload. and with passport.use() , payload will sit in place of jwt_payload
-  // so we can log jwt_payload and get the payload.
+  // so we can log jwt_payload and get the payload. payload contains id,name,avatar
 
-  // we should send token by Headers with key=Authorization,value=token so the word of Authorization is reqly important.
+  // we should send token by Headers with key=Authorization,value=token so the word of Authorization is really important.
+  //  here we should send payload to go and sit in place of jwt_payload
   res.json({
     id: req.user.id,
     name: req.user.name,

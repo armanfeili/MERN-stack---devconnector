@@ -37,6 +37,16 @@ class Navbar extends Component {
       // logOut is not a <Link> and becasue of it's just a click event, we can use <a>, it's not actually going anywhere
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
+          <Link className="nav-link" to="/feed">
+            Post feed
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/dashboard">
+            Dashboard
+          </Link>
+        </li>
+        <li className="nav-item">
           <Link
             to=""
             onClick={this.onLogoutClick.bind(this)}

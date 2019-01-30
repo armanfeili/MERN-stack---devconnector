@@ -7,7 +7,7 @@ const initialState = {
   user: {}
 };
 
-// any reducer export a finction that contains a state and an action
+// any reducer exports a finction that contains a state and an action
 // state here is current state that reducer is responsible for, not whole application state
 export default function(state = initialState, action) {
   // any action should have a type, it can also have payload with data

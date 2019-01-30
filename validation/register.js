@@ -4,7 +4,7 @@ const isEmpty = require('./is-empty'); // instead of installing lodash and use i
 module.exports = function validateRegisterInput (data) { // it's just a function that when it called, it takes some data and make sure that it's as the way as we want
   let errors = {}; // we create an empty errors object, so if there was an error, it gets fill
 
-  data.name = !isEmpty(data.name) ? data.name : ''; // check to make sure that if data was empty, it should be an empty strin. not anything else
+  data.name = !isEmpty(data.name) ? data.name : ''; // check to make sure that if data was empty, it should be an empty string. not anything else
   data.email = !isEmpty(data.email) ? data.email : ''; // the isEmpty() method used here is the method we own created
   data.password = !isEmpty(data.password) ? data.password : '';
   data.password2 = !isEmpty(data.password2) ? data.password2 : '';

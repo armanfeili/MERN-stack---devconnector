@@ -7,7 +7,7 @@ module.exports = function validateEducationInput (data) { // it's just a functio
   // the required things - so we write these code then we can use validator.isEmpty() on them.
   data.school = !isEmpty(data.school) ? data.school : ''; // the isEmpty() method used here is the method we own created
   data.degree = !isEmpty(data.degree) ? data.degree : '';
-  data.fieldOfStudy = !isEmpty(data.fieldOfStudy) ? data.fieldOfStudy : '';
+  data.fieldofstudy = !isEmpty(data.fieldofstudy) ? data.fieldofstudy : '';
   data.from = !isEmpty(data.from) ? data.from : '';
 
   if (validator.isEmpty(data.school)) {
@@ -16,8 +16,8 @@ module.exports = function validateEducationInput (data) { // it's just a functio
   if (validator.isEmpty(data.degree)) {
     errors.degree = 'Degree field is required.';
   }
-  if (validator.isEmpty(data.fieldOfStudy)) {
-    errors.fieldOfStudy = 'Field of study field is required.';
+  if (validator.isEmpty(data.fieldofstudy)) {
+    errors.fieldofstudy = 'Field of study field is required.';
   }
   if (validator.isEmpty(data.from)) {
     errors.from = 'From date field is required.';

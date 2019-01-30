@@ -17,8 +17,8 @@ const validateEducationInput = require('./../../validation/education');
 // @access  Public  -> everyone should be able to see profiles (optional)
 router.get('/all', (req, res) => {
   const errors = {};
-  Profile.find()
-    .populate('user', ['name', 'avatar'])
+  Profile.find() // finds everything
+    .populate('user', ['name', 'avatar']) // everyone should be able to see just the user's name and user's avatar, not id
     .then(profiles => {
       if (!profiles) {
         errors.noprofile = 'There are no profiles';
@@ -66,8 +66,7 @@ router.get('/user/:user_id', (req, res) => { // we don't need passport middlewar
 });
 
 // @route   GET api/profile  ->  here we don't use /profile/:id , because when we have protected routes, 
-// we're getting a token that has a payload with user's information ,so we use that. it's more secure, because you have to be loged in to access this route
-
+//          we're getting a token that has a payload with user's information ,so we use that. it's more secure, because you have to be loged in to access this route
 // @desc    Get current users profile
 // @access  Private
 
@@ -77,7 +76,7 @@ router.get(
   (req, res) => {
     const errors = {};
 
-    Profile.findOne({ user: req.user.id })
+    Profile.findOne({ user: req.user.id }) // this is comming from payload
       .populate('user', ['name', 'avatar']) // for getting user info like avatar and name, but not email -- 'user' refers to user in profile.js model
       .then(profile => {
         if (!profile) {
@@ -130,9 +129,9 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
     if (profile) {
       // Update
       Profile.findOneAndUpdate(
-        { user: req.user.id },
+        { user: req.user.id }, // id is comming from payload and payload is in protected routes
         { $set: profileFields },
-        { new: true }
+        { new: true } // we want the updated one
       ).then(profile => res.json(profile));
     } else {
       // Create
@@ -162,7 +161,7 @@ router.post('/experience', passport.authenticate('jwt', {session: false}), (req,
     return res.status(400).json(errors); // return any errors
   }
 
-  Profile.findOne({user: req.user.id})
+  Profile.findOne({ user: req.user.id }) // id is comming from payload and payload is in protected routes
     .then(profile => {
       const newExp = {
         title: req.body.title,
@@ -193,12 +192,12 @@ router.post('/education', passport.authenticate('jwt', { session: false }), (req
     return res.status(400).json(errors); // return any errors
   }
 
-  Profile.findOne({ user: req.user.id })
+  Profile.findOne({ user: req.user.id }) // id is comming from payload and payload is in protected routes
     .then(profile => {
       const newEdu = {
         school: req.body.school,
         degree: req.body.degree,
-        fieldOfStudy: req.body.fieldOfStudy,
+        fieldofstudy: req.body.fieldofstudy,
         from: req.body.from,
         to: req.body.to,
         current: req.body.current,

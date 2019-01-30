@@ -2,21 +2,21 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-const TextFieldGroup = ({name, value, placeholder, label, error, info, type, onChange, disabled}) => {
+const InputGroun = ({name, value, placeholder, error, icon, type, onChange}) => {
 
   return (
-    <div className='form-group'>
+    <div className='input-group mb-3'>
+      <div className='input-group-prepend'>
+        <span className='input-group-text'><i className={icon}></i></span>
+      </div>
       <input
-        type={type}
         className={classnames('form-control form-control-lg', {
                      'is-invalid': error
                    })}
         placeholder={placeholder}
         name={name}
         value={value}
-        onChange={onChange}
-        disabled={disabled} />
-      {info && <small className='form-text text-muted'>{info}</small>}
+        onChange={onChange} />
       {error && (
        <div className='invalid-feedback'>
          {error}
@@ -25,21 +25,20 @@ const TextFieldGroup = ({name, value, placeholder, label, error, info, type, onC
   );
 };
 
-TextFieldGroup.propTypes = {
+InputGroun.propTypes = {
   // specifinig the types and which one is required
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  type: PropTypes.string.isRequired,
-  info: PropTypes.string,
+  type: PropTypes.string.isRequired, // we need types
+  icon: PropTypes.string, // we need icon
   error: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  disabled: PropTypes.string
+//   disabled: PropTypes.string - we don't need that
 };
 
-// as default ,type will be text and everything which is not passed in, will be null or false 
-TextFieldGroup.defaultProps = {
+InputGroun.defaultProps = {
   type: 'text'
 };
 
-export default TextFieldGroup;
+export default InputGroun;

@@ -43,7 +43,7 @@ router.get('/', (req, res) => {
 
 // @route   GET api/posts/:id
 // @desc    get one post
-// @access  Private
+// @access  Public
 router.get('/:id', (req, res) => {
   // Post.findOne({user: req.params.id})  // it's not working!!! why?
   Post.findById(req.params.id)
@@ -55,11 +55,12 @@ router.get('/:id', (req, res) => {
 // @desc    delete a post
 // @access  Private
 router.delete('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
-  Profile.findOne({user: req.user.id}) // make sure it's the current user - the id is different from req.params.id
+  Profile.findOne({user: req.user.id}) // make sure it's the current user - the id is different from req.params.id and comming from payload
     .then(profile => { // here we just found that profile and we have nothing to do with that profile
-      Post.findById(req.params.id).then(post => { // find that post
+      Post.findById(req.params.id).then(post => { // find that particular post
         // Check for post owner
         if (post.user.toString() !== req.user.id) { // post.user is an id and not string, so we used toString()
+          // user is << user: req.user.id >> 
           return res.status(404).json({notauthorized: 'User not authorized'});
         }
 
@@ -74,7 +75,7 @@ router.delete('/:id', passport.authenticate('jwt', {session: false}), (req, res)
 // @desc    Like post
 // @access  Private
 router.post('/like/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Profile.findOne({ user: req.user.id }) // make sure it's the current user
+  Profile.findOne({ user: req.user.id }) // make sure it's the current user with payload (token)
     .then(profile => {
       Post.findById(req.params.id).then(post => { // find that post
         if (post.likes.filter(like => like.user.toString() === req.user.id).length > 0) { // check if likes array has the id of this user
@@ -160,35 +161,37 @@ router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', { session
     .catch(err => res.json(404).json({ postnotfound: 'Post not found' }));
 });
 
-// router.delete(
-//   '/comment/:id/:comment_id',
-//   passport.authenticate('jwt', { session: false }),
-//   (req, res) => {
-//     Post.findById(req.params.id)
-//       .then(post => {
-//         // Check to see if comment exists
-//         if (
-//           post.comments.filter(
-//             comment => comment._id.toString() === req.params.comment_id
-//           ).length === 0
-//         ) {
-//           return res
-//             .status(404)
-//             .json({ commentnotexists: 'Comment does not exist' })
-//         }
+router.delete(
+  '/comment/:id/:comment_id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Post.findById(req.params.id)
+      .then(post => {
+        // Check to see if comment exists
+        if (
+          post.comments.filter(
+            comment => comment._id.toString() === req.params.comment_id
+          ).length === 0
+        ) {
+          return res
+            .status(404)
+            .json({ commentnotexists: 'Comment does not exist' });
+        }
 
-//         // Get remove index
-//         const removeIndex = post.comments
-//           .map(item => item._id.toString())
-//           .indexOf(req.params.comment_id)
+        // Get remove index
+        const removeIndex = post.comments
+          .map(item => item._id.toString())
+          .indexOf(req.params.comment_id);
 
-//         // Splice comment out of array
-//         post.comments.splice(removeIndex, 1)
+        // Splice comment out of array
+        post.comments.splice(removeIndex, 1);
 
-//         post.save().then(post => res.json(post))
-//       })
-//       .catch(err => res.status(404).json({ postnotfound: 'No post found' }))
-//   }
-// )
+        post.save().then(post => res.json(post));
+      })
+      .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
+  }
+);
 
 module.exports = router;
+
+// /////////////////////////////////////////////////////////////////////
