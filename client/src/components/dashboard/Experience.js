@@ -49,9 +49,6 @@ class Experience extends Component {
 
     return (
       <div>
-        <Link to='/dashboard' className='btn btn-light'>
-        {" "} Go Back
-        </Link>
         <h4 className='mb-4'>Experience Credential</h4>
         <table className='table'>
           <thead>

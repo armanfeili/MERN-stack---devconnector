@@ -111,7 +111,7 @@ class Profile extends Component {
         <div>
           <div className='row'>
             <div className='col-md-6'>
-              <Link to='/profiles' className='btn btn-light mb-3 float-left'> Back To Profiles
+              <Link to='/profiles' className='btn btn-light mb-3 float-left componentBody'> Back To Profiles
               </Link>
             </div>
             <div className='col-md-6' />
@@ -132,6 +132,7 @@ class Profile extends Component {
           <div className='row'>
             <div className='col-md-12'>
               {profileContent}
+              <div className='lastComponent'></div>
             </div>
           </div>
         </div>

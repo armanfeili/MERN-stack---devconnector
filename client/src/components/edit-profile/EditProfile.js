@@ -207,11 +207,11 @@ class EditProfile extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to="/dashboard" className="btn btn-light">
+              <Link to="/dashboard" className="btn btn-light componentBody">
                 {" "}
                 Go Back
               </Link>
-              <h1 className="display-4 text-center">Edit Profile</h1>
+              <h1 className="display-4 text-center ">Edit Profile</h1>
               <small className="d-block pb-3">* = required fields</small>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
@@ -282,8 +282,9 @@ class EditProfile extends Component {
 
                 <div className="mb-3">
                   <button
-                    type="button" // we should specify type for button,otherwise pressing this button will submit the form
+                    type="button"
                     onClick={() => {
+                      // we should specify type for button,otherwise pressing this button will submit the form
                       // this button has an onClick method in it, which take prev component State and update it
                       this.setState(prevState => ({
                         // with setState(), displaySocialInputs that it's default value sat to false in component state, updates
@@ -301,7 +302,7 @@ class EditProfile extends Component {
                 <input
                   type="submit"
                   value="Submit"
-                  className="btn btn-info btn-block mt-4"
+                  className="btn btn-info btn-block mt-4 lastComponent lastComponent"
                 />
               </form>
             </div>

@@ -98,8 +98,8 @@ class Dashboard extends Component {
         <div className='dashboard'>
           <div className='container'>
             <div className='row'>
-              <div className='col-m-12'>
-                <h1 className='display-4'>Dashboard</h1>
+              <div className='col-m-12 componentBody'>
+                <h1 className='display-4 '>Dashboard</h1>
                 {dashboardContent}
               </div>
             </div>

@@ -31,6 +31,7 @@ class Posts extends Component {
             <div className='col-md-12'>
               <PostForm />
               {postContent}
+              <div className='lastComponent'></div>
             </div>
           </div>
         </div>

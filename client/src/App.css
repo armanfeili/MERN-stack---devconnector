@@ -7,7 +7,7 @@ img {
   background: url("./img/showcase.jpg") no-repeat;
   background-size: cover;
   background-position: center;
-  height: 95vh;
+  height: 100vh;
   margin-top: -24px;
   margin-bottom: -50px;
 }
@@ -39,7 +39,9 @@ img {
 }
 
 .header {
+  top: 0px;
   width: 100%;
+  z-index: 1000;
   position: fixed;
 }
 
@@ -47,4 +49,12 @@ img {
   bottom: 0%;
   width: 100%;
   position: fixed;
+}
+
+.componentBody {
+  margin-top: 60px;
+}
+
+.lastComponent {
+  margin-bottom: 60px;
 }

@@ -7,18 +7,18 @@ import { Link } from 'react-router-dom';
 
 class Education extends Component {
 
-  
+
   // onDeleteClick (id) { // we passed exp._id to onDeleteClick() so it will delete the individual item
   //   this.props.deleteExperience(id)
   onDeleteClick (id) {
     this.props.deleteEducation(id);
   }
-  
+
   // // it also need to redirect to dashboard again, one way is using this.props.history and
   // // combine withRouter with component, other way is just delete experience in backend and fetch current 
   // // profile with GET_PROFILE action type
   // }
-  
+
   render () {
     const education = this.props.education.map(edu => (
       <tr key={edu._id}>
@@ -50,9 +50,6 @@ class Education extends Component {
 
     return (
       <div>
-        <Link to='/dashboard' className='btn btn-light'>
-        {" "} Go Back
-        </Link>
         <h4 className='mb-4'>Education Credential</h4>
         <table className='table'>
           <thead>
