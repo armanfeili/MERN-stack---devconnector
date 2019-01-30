@@ -38,6 +38,11 @@ img {
   color: #bbb !important;
 }
 
+.header {
+  width: 100%;
+  position: fixed;
+}
+
 .footer {
   bottom: 0%;
   width: 100%;

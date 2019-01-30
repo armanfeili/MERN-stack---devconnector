@@ -33,7 +33,7 @@ class Navbar extends Component {
     const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = ( // logOut is not a <Link> and becasue of it's just a click event, we can use <a>, it's not actually going anywhere // in authLinks we wnat to have logOut button and a link to dashboard,
-      <ul className="navbar-nav ml-auto">
+      <ul className="navbar-nav ml-auto  ">
         <li className="nav-item">
           <Link className="nav-link" to="/feed">
             Post feed
@@ -80,7 +80,7 @@ class Navbar extends Component {
     );
 
     return (
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4 header">
         <div className="container">
           <Link className="navbar-brand" to="/">
             DevConnector
