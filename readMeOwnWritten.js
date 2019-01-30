@@ -113,3 +113,21 @@
 
 // and also we should make sure, we loged in to heroku and have set a git remote to heroku server
 //
+
+// Notice:
+// there might be some issues on pushing to heroku, and maybe it shows this error:
+// ./src/index.css
+//      remote: Module build failed: BrowserslistError: Unknown browser query`dead`
+//      remote: at Array.forEach(<anonymous>)
+
+// so we should change our browserlist in root package.json, to sth like below, and actually we limit our application to not run in some browsersß:
+
+// "browserslist": [
+//     "> 0.5%",
+//     "last 2 versions",
+//     "Firefox ESR",
+//     "not ie <= 10",
+//     "not ie_mob <= 10",
+//     "not bb <= 10",
+//     "not op_mob <= 12.1"
+// ]
