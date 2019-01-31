@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { deleteExperience } from '../../actions/profileActions';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom'
 
 class Experience extends Component {
 

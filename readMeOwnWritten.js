@@ -131,3 +131,17 @@
 //     "not bb <= 10",
 //     "not op_mob <= 12.1"
 // ]
+
+// mongoDB atlas tips:
+
+// we go to mongodb.com and sign in, then we create a cluster,click on aws, then N.Virginia(us - east - 1) , then
+// in shared Tier, click free for ever, then set a cluster name, and build a cluster:
+// then go to securety > Add new user > set username and password and click on Read and write to any database./then click AddUser
+// these users that we entered, can read and write any database
+// then in securety, go to IP Whitelist > click on ADD IP ADDRESS
+// we can use our current ip address, which is our dev mashin(where we developing applications) and once we deployed we should put our server's ip address.
+// or we can use allow access from anywhere with username and password,  
+// if we're in production and it's a real application for the client, it's good to hoose 'ADD CURRENT IP ADDRESS', then click confirm
+
+// then in our cluster overview, we click on connect > connect your application > standarad connection string
+// we copy the URI connection string and paste it in congig/keys.js

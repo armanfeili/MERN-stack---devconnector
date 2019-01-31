@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { deleteEducation } from '../../actions/profileActions';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom'
 
 class Education extends Component {
-
 
   // onDeleteClick (id) { // we passed exp._id to onDeleteClick() so it will delete the individual item
   //   this.props.deleteExperience(id)
