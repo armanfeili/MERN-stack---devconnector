@@ -48,7 +48,7 @@ export const loginUser = (userData) => dispatch => {
 
       // Decode token to get userData
       // token here contains all info about user like: name,id,avatar, 
-      // inorder to decode this, we need to add a module jwt-decode , then we can extract user from that
+      // in order to decode this, we need to add a module jwt-decode , then we can extract user from that
       const decoded = jwt_decode(token); // decoded has userdata and expirationTime of the token
 
       // Set current user

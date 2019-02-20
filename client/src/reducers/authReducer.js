@@ -23,11 +23,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
-        user: action.payload
+        user: action.payload //fill it with decoded payload
       }; // make isAuthenticated true if we had payload // fill the user in application state
 
     // by default we return the actual state
     default:
       return state;
+    // because of we use return, we don't need to use break; anymore
   }
 }

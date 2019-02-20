@@ -145,9 +145,7 @@ router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req
 router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', { session: false }), (req, res) => {
   Post.findById(req.params.id).then(post => {
     // check if comment exists
-    // if (post.comments.filter(comment => comment._id.toString() === req.params.comment_id).length === 0) {
-    //   return res.status(404).json({commentnotexists: 'Comment does not exist.'})
-    // }
+
     if (post.comments.filter(comment => comment._id.toString() === req.params.comment_id).length === 0) {
       return res.status(404).json({ commentnotexists: 'Comment does not exist' });
     }

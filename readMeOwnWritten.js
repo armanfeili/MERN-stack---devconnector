@@ -123,13 +123,13 @@
 // so we should change our browserlist in root package.json, to sth like below, and actually we limit our application to not run in some browsersß:
 
 // "browserslist": [
-//     "> 0.5%",
-//     "last 2 versions",
-//     "Firefox ESR",
-//     "not ie <= 10",
-//     "not ie_mob <= 10",
-//     "not bb <= 10",
-//     "not op_mob <= 12.1"
+    // "> 0.5%",
+    // "last 2 versions",
+    // "Firefox ESR",
+    // "not ie <= 10",
+    // "not ie_mob <= 10",
+    // "not bb <= 10",
+    // "not op_mob <= 12.1"
 // ]
 
 // mongoDB atlas tips:
@@ -144,4 +144,6 @@
 // if we're in production and it's a real application for the client, it's good to hoose 'ADD CURRENT IP ADDRESS', then click confirm
 
 // then in our cluster overview, we click on connect > connect your application > standarad connection string
-// we copy the URI connection string and paste it in congig/keys.js
+// we copy the URI connection string and paste it in congig/keys_dev.js
+
+// please check the congig/keys_dev.js
